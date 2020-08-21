@@ -1,0 +1,133 @@
+I-Logix-RPY-Archive version 8.15.0 * 9841247
+
+- m_fileModifyTime = { IRPYRawContainer 
+	- size = 32;
+	- value = "../../src/ServiceTest/Protocol/S_WS_Protocol.cpp" 6.21.2019::1:48:59
+	"../../src/ServiceTest/Protocol/S_WS_Protocol.h" 6.21.2019::1:48:59
+	"../../src/ServiceTest/S_WS_MainSession.cpp" 6.28.2019::8:6:55
+	"../../src/ServiceTest/S_WS_MainSession.h" 6.28.2019::8:6:55
+	"../../src/ServiceTest/S_WS_Parser.cpp" 6.28.2019::8:6:55
+	"../../src/ServiceTest/S_WS_Parser.h" 6.28.2019::8:6:55
+	"../../src/ServiceTest/S_WS_Session.cpp" 6.28.2019::8:29:17
+	"../../src/ServiceTest/S_WS_Session.h" 6.28.2019::8:29:17
+	"../../src/ServiceTest/ServiceTest.cpp" 6.28.2019::8:29:18
+	"../../src/ServiceTest/ServiceTest.h" 6.28.2019::8:29:18
+	"../../src/Utils/S_WS_DataParser.cpp" 6.20.2019::2:55:3
+	"../../src/Utils/S_WS_DataParser.h" 6.20.2019::2:55:3
+	"../../src/Utils/S_WS_DataReceiver.cpp" 6.20.2019::3:14:32
+	"../../src/Utils/S_WS_DataReceiver.h" 6.20.2019::3:15:35
+	"../../src/WebSocketService/S_WS_Connection.cpp" 8.20.2019::6:0:44
+	"../../src/WebSocketService/S_WS_Connection.h" 6.20.2019::7:5:36
+	"../../src/WebSocketService/S_WS_ConnectionManager.cpp" 8.20.2019::6:0:12
+	"../../src/WebSocketService/S_WS_ConnectionManager.h" 8.20.2019::6:0:12
+	"../../src/WebSocketService/S_WS_ConnectionService.cpp" 6.19.2019::9:38:42
+	"../../src/WebSocketService/S_WS_ConnectionService.h" 6.19.2019::9:38:42
+	"../../src/WebSocketService/S_WS_ConnectionSession.cpp" 6.19.2019::9:38:42
+	"../../src/WebSocketService/S_WS_ConnectionSession.h" 6.19.2019::9:38:42
+	"../../src/WebSocketService/S_WS_DataReceiver.cpp" 6.28.2019::8:6:55
+	"../../src/WebSocketService/S_WS_DataReceiver.h" 6.28.2019::8:6:55
+	"../../src/WebSocketService/S_WS_Msg.cpp" 6.28.2019::8:6:55
+	"../../src/WebSocketService/S_WS_Msg.h" 6.28.2019::8:30:59
+	"../../src/WebSocketService/S_WS_Service.cpp" 8.20.2019::5:58:11
+	"../../src/WebSocketService/S_WS_Service.h" 8.20.2019::5:56:29
+	"../../src/WebSocketService/S_WS_Session.cpp" 6.20.2019::2:6:5
+	"../../src/WebSocketService/S_WS_Session.h" 6.20.2019::2:6:5
+	"../../src/WebSocketService/WebSocketService.cpp" 6.20.2019::3:52:48
+	"../../src/WebSocketService/WebSocketService.h" 6.20.2019::3:52:48
+	
+}
+- m_saveUnitAndOwnerSaveUnit = { IRPYRawContainer 
+	- size = 3;
+	- value = "GUID 5ceba67a-0fae-4508-ae07-cf77997aec9f" "GUID f3b6d5fe-7a3c-408f-bdf4-c09277461765"
+	"GUID ebe13b2d-def1-44c8-bfcc-5e00dcfa011f" "GUID e3577c5e-40ae-4f14-8cfe-c274b4ef8ca1"
+	"GUID f3b6d5fe-7a3c-408f-bdf4-c09277461765" "GUID e3577c5e-40ae-4f14-8cfe-c274b4ef8ca1"
+	
+}
+- size = 11;
+- hElement = { IHandle 
+	- _m2Class = "IClass";
+	- _filename = ".\\..\\design\\s_websocket\\s_websocket_rpy\\Protocol.sbsx";
+	- _subsystem = "ServiceTest::Protocol";
+	- _name = "S_WS_Protocol";
+	- _id = GUID 53c6dbaf-23d8-4468-b6b2-04803150e53f;
+}
+- genTime = 6.29.2019::3:10:25;
+- hElement = { IHandle 
+	- _m2Class = "IClass";
+	- _filename = ".\\..\\design\\s_websocket\\s_websocket_rpy\\ServiceTest.sbsx";
+	- _subsystem = "ServiceTest";
+	- _name = "S_WS_Session";
+	- _id = GUID c63e861a-405c-4aca-b911-52d890fcf5fa;
+}
+- genTime = 6.29.2019::3:10:25;
+- hElement = { IHandle 
+	- _m2Class = "IClass";
+	- _filename = ".\\..\\design\\s_websocket\\s_websocket_rpy\\ServiceTest.sbsx";
+	- _subsystem = "ServiceTest";
+	- _name = "S_WS_Parser";
+	- _id = GUID cd0b04b4-52ad-4bf8-b61b-141853014e69;
+}
+- genTime = 6.29.2019::3:10:25;
+- hElement = { IHandle 
+	- _m2Class = "IClass";
+	- _filename = ".\\..\\design\\s_websocket\\s_websocket_rpy\\ServiceTest.sbsx";
+	- _subsystem = "ServiceTest";
+	- _name = "S_WS_MainSession";
+	- _id = GUID b0cf9579-aa00-4f99-8d44-ea13379bf54f;
+}
+- genTime = 6.29.2019::3:10:25;
+- hElement = { IHandle 
+	- _m2Class = "IClass";
+	- _filename = ".\\..\\design\\s_websocket\\s_websocket_rpy\\WebSocketService.sbsx";
+	- _subsystem = "WebSocketService";
+	- _name = "S_WS_Connection";
+	- _id = GUID 5472aee2-80e0-4e3e-81ad-244c969b1935;
+}
+- genTime = 8.20.2019::7:52:37;
+- hElement = { IHandle 
+	- _m2Class = "ISubsystem";
+	- _filename = ".\\..\\design\\s_websocket\\s_websocket_rpy\\WebSocketService.sbsx";
+	- _name = "WebSocketService";
+	- _id = GUID ebe13b2d-def1-44c8-bfcc-5e00dcfa011f;
+}
+- genTime = 6.20.2019::4:3:7;
+- hElement = { IHandle 
+	- _m2Class = "IClass";
+	- _filename = ".\\..\\design\\s_websocket\\s_websocket_rpy\\WebSocketService.sbsx";
+	- _subsystem = "WebSocketService";
+	- _name = "S_WS_ConnectionManager";
+	- _id = GUID 74e100af-075e-4df3-bf67-6f2ea12b9c58;
+}
+- genTime = 8.20.2019::6:0:12;
+- hElement = { IHandle 
+	- _m2Class = "IClass";
+	- _filename = ".\\..\\design\\s_websocket\\s_websocket_rpy\\WebSocketService.sbsx";
+	- _subsystem = "WebSocketService";
+	- _name = "S_WS_Msg";
+	- _id = GUID 8521455f-d503-4475-a00d-f4758656c4b0;
+}
+- genTime = 8.20.2019::7:52:37;
+- hElement = { IHandle 
+	- _m2Class = "ISubsystem";
+	- _filename = ".\\..\\design\\s_websocket\\s_websocket_rpy\\ServiceTest.sbsx";
+	- _name = "ServiceTest";
+	- _id = GUID f3b6d5fe-7a3c-408f-bdf4-c09277461765;
+}
+- genTime = 6.29.2019::3:10:25;
+- hElement = { IHandle 
+	- _m2Class = "IClass";
+	- _filename = ".\\..\\design\\s_websocket\\s_websocket_rpy\\WebSocketService.sbsx";
+	- _subsystem = "WebSocketService";
+	- _name = "S_WS_Service";
+	- _id = GUID 426039ff-df85-404b-9aac-0f053a8dbed9;
+}
+- genTime = 8.20.2019::5:59:5;
+- hElement = { IHandle 
+	- _m2Class = "IClass";
+	- _filename = ".\\..\\design\\s_websocket\\s_websocket_rpy\\WebSocketService.sbsx";
+	- _subsystem = "WebSocketService";
+	- _name = "S_WS_DataReceiver";
+	- _id = GUID cb63fd0b-9a75-4bd7-badd-1b4f10c98fb1;
+}
+- genTime = 8.20.2019::7:52:37;
+
