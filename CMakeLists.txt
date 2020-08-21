@@ -17,6 +17,7 @@ elseif (CMAKE_SYSTEM_NAME MATCHES "Windows")
     set(THIRDPARTY "D:/work/projects/3rdparty")
     set(BOOST_DATE_TIME_LIB libboost_date_time-vc141-mt-x64-1_72.lib)
     set(BOOST_THREAD_LIB libboost_thread-vc141-mt-x64-1_72.lib)
+    set(OXF_LIB oxf-md.lib)
 endif ()
 
 #加载自定义模块
@@ -34,6 +35,14 @@ set(INSTALL_PATH_INCLUDE ${THIRDPARTY}/${CMAKE_PROJECT_NAME}/include)
 #安装头文件至系统目录
 install(DIRECTORY src DESTINATION ${INSTALL_PATH_INCLUDE} FILES_MATCHING PATTERN "*.h")
 
+#oxf
+set(OXF_ROOT_PATH ${THIRDPARTY}/oxf)
+set(OXF_INCLUDE_PATH ${OXF_ROOT_PATH}/include)
+set(OXF_LIB_PATH ${OXF_ROOT_PATH}/lib/${system}/${platform}/${CMAKE_BUILD_TYPE})
+INCLUDE_DIRECTORIES(${OXF_INCLUDE_PATH})
+link_directories(${OXF_LIB_PATH})
+list(APPEND LINK_LIB_LIST ${OXF_LIB})
+
 #boost
 #set(BOOST_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/boost)
 set(BOOST_ROOT_PATH ${THIRDPARTY}/boost)
@@ -42,21 +51,6 @@ set(BOOST_LIB_PATH ${BOOST_ROOT_PATH}/lib/${system}/${platform})
 INCLUDE_DIRECTORIES(${BOOST_INCLUDE_PATH})
 link_directories(${BOOST_LIB_PATH})
 list(APPEND LINK_LIB_LIST ${BOOST_DATE_TIME_LIB} ${BOOST_THREAD_LIB})
-
-set(OXF_Root ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/oxf)
-aux_source_directory(${OXF_Root}/src src_oxf)
-include_directories(${OXF_Root}/src)
-add_library(oxf STATIC ${src_oxf})
-
-#log4cplus
-#set(LOG_ROOT_PATH "${THIRDPARTY}/log4cplus")
-#set(LOG_INCLUDE_PATH "${LOG_ROOT_PATH}/include")
-#set(LOG_LIB_PATH "${LOG_ROOT_PATH}/lib")
-#if (WIN32)
-#set(LOG_LIB_PATH "${LOG_ROOT_PATH}/lib/x64")
-#endif (WIN32)
-#set(LOG_LIB "${LOG_LIB_PATH}/${LOG_LIB}")
-#INCLUDE_DIRECTORIES("${LOG_INCLUDE_PATH}")
 
 if (WIN32)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")

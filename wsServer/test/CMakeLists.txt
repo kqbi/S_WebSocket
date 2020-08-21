@@ -1,5 +1,3 @@
-list(APPEND LINK_LIB_LIST oxf)
-
 INCLUDE_DIRECTORIES("../../include")
 INCLUDE_DIRECTORIES("../../src/WebSocketServer/test")
 
