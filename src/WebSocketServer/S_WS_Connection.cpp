@@ -18,7 +18,7 @@
 namespace S_WS {
 //## class S_WS_Connection
     S_WS_Connection::S_WS_Connection(boost::asio::io_context &ioc, std::string &connectionId,
-                                     S_WS_ServerService &service,
+                                     std::shared_ptr<S_WS_ServerService> service,
                                      S_WS_ConnectionManager &connectionManager, boost::asio::ip::tcp::socket &&s)
             : _connectionId(connectionId), _connectionManager(connectionManager), _remoteIpAddress(""),
               _remotePort(0), _service(service), _strand(ioc.get_executor()),
@@ -55,14 +55,14 @@ namespace S_WS {
                         stop(ec, "read");
                     } else {
                         if (bytesTransferred) {
-                            if (_service._pUserRead && _service._readFromServer) {
+                            if (_service->_pUserRead && _service->_readFromServer) {
                                 S_WS_Msg *msg = new S_WS_Msg(_connectionId,
                                                              std::string(
                                                                      boost::beast::buffers_to_string(_buffer.data())));
                                 msg->_remoteIp = _remoteIpAddress;
                                 msg->_remotePort = _remotePort;
                                 S_LOG_DEBUG("read:" << msg->_msg)
-                                _service._readFromServer(_service._pUserRead, msg);
+                                _service->_readFromServer(_service->_pUserRead, msg);
                             }
                             _buffer.consume(_buffer.size());
                         }
@@ -138,8 +138,8 @@ namespace S_WS {
         //#[ operation stop()
         S_LOG_DEBUG(f << "error: " << ec.message());
         if (ec != boost::asio::error::operation_aborted) {
-            if (_service._pUserNotify && _service._disConnectNotify)
-                _service._disConnectNotify(_service._pUserNotify, _connectionId);
+            if (_service->_pUserNotify && _service->_disConnectNotify)
+                _service->_disConnectNotify(_service->_pUserNotify, _connectionId);
             _connectionManager.stop(shared_from_this());
         } else {
             if (_ws.is_open()) {

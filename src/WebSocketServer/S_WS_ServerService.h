@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <boost/asio.hpp>
 #include <boost/beast.hpp>
+
 namespace S_WS {
     class S_WS_Connection;
 
@@ -25,13 +26,15 @@ namespace S_WS {
 //## package WebSocketService
 
 //## class S_WS_Service
-    class S_WS_ServerService {
+    class S_WS_ServerService : public std::enable_shared_from_this<S_WS_ServerService> {
     public :
         typedef std::shared_ptr<S_WS_Connection> connection_ptr;
 
         typedef void (*READFROMSERVER)(void *pUser, S_WS_Msg *msg);
 
         typedef void (*DISCONNECTNOTIFY)(void *pUser, std::string &connectionId);
+
+        typedef std::shared_ptr<S_WS_ServerService> Ptr;
         ////    Constructors and destructors    ////
 
         //## operation S_WS_Service(const std::string&,int,const std::string&,std::size_t)

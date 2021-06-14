@@ -819,7 +819,7 @@ namespace S_WS {
 
             connection_ptr newConnection(new S_WS_Connection(_ioc,
                                                              connectId,
-                                                             *this,
+                                                             shared_from_this(),
                                                              _connectionManager,
                                                              std::move(s)));
             newConnection->_remoteIpAddress = endpoint.address().to_string();

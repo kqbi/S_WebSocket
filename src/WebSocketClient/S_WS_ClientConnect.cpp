@@ -10,7 +10,7 @@
 #include <iostream>
 
 namespace S_WS {
-    S_WS_ClientConnect::S_WS_ClientConnect(boost::asio::io_context &ioc, S_WS_ClientService &service)
+    S_WS_ClientConnect::S_WS_ClientConnect(boost::asio::io_context &ioc, std::shared_ptr<S_WS_ClientService> service)
             : _resolver(boost::asio::make_strand(ioc)), _ws(boost::asio::make_strand(ioc)),
               _strand(ioc.get_executor()), _service(service) {
 
@@ -63,9 +63,9 @@ namespace S_WS {
                                                         BOOST_BEAST_VERSION_STRING) +
                                                 " websocket-client-async");
                                         req.set(boost::beast::http::field::host,
-                                                _service._ipAddress +
-                                                ":" + _service._port);
-                                        for (auto it : _service._extraHeaders) {
+                                                _service->_ipAddress +
+                                                ":" + _service->_port);
+                                        for (auto it : _service->_extraHeaders) {
                                             req.set(it.first, it.second);
                                         }
                                     }));
@@ -77,13 +77,13 @@ namespace S_WS {
 
     void S_WS_ClientConnect::asyncHandshake() {
         auto self = shared_from_this();
-        _ws.async_handshake(_service._ipAddress, "/" + _service._target,
+        _ws.async_handshake(_service->_ipAddress, "/" + _service->_target,
                             [this, self](boost::beast::error_code ec) {
                                 if (ec) {
                                    stop(ec, "Handshake");
                                    return;
                                 }
-                                _service._connected(_service._pUser, true);
+                                _service->_connected(_service->_pUser, true);
 
                                 asyncRead();
                             });
@@ -96,10 +96,10 @@ namespace S_WS {
                 stop(ec, "Read");
             } else {
                 if (bytesTransferred) {
-                    if (_service._pUserRead && _service._readFromServer) {
+                    if (_service->_pUserRead && _service->_readFromServer) {
                         S_WS_Msg *msg = new S_WS_Msg(std::string(""),
                                                      std::string(boost::beast::buffers_to_string(_buffer.data())));
-                        _service._readFromServer(_service._pUserRead, msg);
+                        _service->_readFromServer(_service->_pUserRead, msg);
                     }
                     _buffer.consume(_buffer.size());
                 }
@@ -136,8 +136,8 @@ namespace S_WS {
         S_LOG_DEBUG(f << "error: " << err.message());
         if (err != boost::asio::error::operation_aborted) {
             closeSocket();
-            if (_service._pUser && _service._connected)
-                _service._connected(_service._pUser, false);
+            if (_service->_pUser && _service->_connected)
+                _service->_connected(_service->_pUser, false);
         }
     }
 

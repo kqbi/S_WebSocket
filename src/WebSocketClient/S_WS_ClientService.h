@@ -13,11 +13,13 @@ namespace S_WS {
 
     class S_WS_ClientConnect;
 
-    class S_WS_ClientService {
+    class S_WS_ClientService : public std::enable_shared_from_this<S_WS_ClientService> {
     public :
         typedef void (*READFROMSERVER)(void *pUser, S_WS_Msg *msg);
 
         typedef void (*CONNECTED)(void *pUser, bool connected);
+
+        typedef std::shared_ptr<S_WS_ClientService> Ptr;
 
         ////    Constructors and destructors    ////
 

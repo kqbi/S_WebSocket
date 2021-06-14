@@ -14,7 +14,7 @@ namespace S_WS {
 
     class S_WS_ClientConnect : public std::enable_shared_from_this<S_WS_ClientConnect> {
     public:
-        S_WS_ClientConnect(boost::asio::io_context &ioc, S_WS_ClientService &service);
+        S_WS_ClientConnect(boost::asio::io_context &ioc, std::shared_ptr<S_WS_ClientService> service);
 
         ~S_WS_ClientConnect();
 
@@ -35,7 +35,7 @@ namespace S_WS {
         boost::asio::ip::tcp::resolver _resolver;
         boost::beast::websocket::stream<boost::beast::tcp_stream> _ws;
         boost::beast::flat_buffer _buffer;
-        S_WS_ClientService &_service;
+        std::shared_ptr<S_WS_ClientService> _service;
         boost::asio::strand<boost::asio::io_context::executor_type> _strand;
     };
 }

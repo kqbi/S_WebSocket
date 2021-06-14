@@ -13,7 +13,6 @@ namespace S_WS {
                                                                            _connected(0), _pUser(0), _pUserRead(0) {
         _extraHeaders.clear();
         Logger::Instance().Init("client.log",0,0,50, 5);
-        _connect = std::make_shared<S_WS_ClientConnect>(ioc, *this);
     }
 
     S_WS_ClientService::~S_WS_ClientService() {
@@ -25,6 +24,7 @@ namespace S_WS {
                                 std::map<std::string, std::string> &extraHeaders) {
         _pUser = pUser;
         _connected = connected;
+        _connect = std::make_shared<S_WS_ClientConnect>(_ioc, shared_from_this());
         std::string schema = Utils::FindField(uri.data(), nullptr, "://");
         if (schema != "ws") {
             S_LOG_DEBUG("schema != ws");

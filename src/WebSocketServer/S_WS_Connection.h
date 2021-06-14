@@ -29,7 +29,7 @@ namespace S_WS {
         ////    Constructors and destructors    ////
 
         //## operation S_WS_Connection(std::string&,S_WS_Service&,S_WS_ConnectionManager&,tcp::socket&&)
-        S_WS_Connection(boost::asio::io_context &ioc, std::string &connectionId, S_WS_ServerService &service,
+        S_WS_Connection(boost::asio::io_context &ioc, std::string &connectionId, std::shared_ptr<S_WS_ServerService> service,
                         S_WS_ConnectionManager &connectionManager, boost::asio::ip::tcp::socket &&s);
 
         //## operation ~S_WS_Connection()
@@ -76,7 +76,7 @@ namespace S_WS {
 
         unsigned short _remotePort;        //## attribute _remotePort
 
-        S_WS_ServerService &_service;        //## attribute _service
+        std::shared_ptr<S_WS_ServerService> _service;        //## attribute _service
 
         boost::beast::websocket::stream<boost::beast::tcp_stream> _ws;        //## attribute _ws
 
