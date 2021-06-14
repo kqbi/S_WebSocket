@@ -275,7 +275,7 @@ namespace S_WS {
 
         void InitSyslog(const std::string &syslog_server_ip, int syslog_server_port, int level);
 
-        boost::log::sources::severity_logger<boost::log::trivial::severity_level> _logger;
+        boost::log::sources::severity_logger<severity_level> _logger;
 
         boost::log::formatter _formatter;
 
@@ -286,16 +286,16 @@ namespace S_WS {
         boost::shared_ptr<sys_sink> _sysSink;
     };
 
-#define S_LOG_TRACE(logEvent)  BOOST_LOG_FUNCTION(); BOOST_LOG_SEV(Logger::Instance()._logger, boost::log::trivial::trace) << logEvent;
+#define S_LOG_TRACE(logEvent)  BOOST_LOG_FUNCTION(); BOOST_LOG_SEV(Logger::Instance()._logger, S_WS::trace) << logEvent;
 
-#define S_LOG_DEBUG(logEvent)  BOOST_LOG_FUNCTION(); BOOST_LOG_SEV(Logger::Instance()._logger, boost::log::trivial::debug) << logEvent;
+#define S_LOG_DEBUG(logEvent)  BOOST_LOG_FUNCTION(); BOOST_LOG_SEV(Logger::Instance()._logger, S_WS::debug) << logEvent;
 
-#define S_LOG_INFO(logEvent)   BOOST_LOG_FUNCTION(); BOOST_LOG_SEV(Logger::Instance()._logger, boost::log::trivial::info) << logEvent;
+#define S_LOG_INFO(logEvent)   BOOST_LOG_FUNCTION(); BOOST_LOG_SEV(Logger::Instance()._logger, S_WS::info) << logEvent;
 
-#define S_LOG_WARN(logEvent)   BOOST_LOG_FUNCTION(); BOOST_LOG_SEV(Logger::Instance()._logger, boost::log::trivial::warning) << logEvent;
+#define S_LOG_WARN(logEvent)   BOOST_LOG_FUNCTION(); BOOST_LOG_SEV(Logger::Instance()._logger, S_WS::warning) << logEvent;
 
-#define S_LOG_ERROR(logEvent)  BOOST_LOG_FUNCTION(); BOOST_LOG_SEV(Logger::Instance()._logger, boost::log::trivial::error) << logEvent;
+#define S_LOG_ERROR(logEvent)  BOOST_LOG_FUNCTION(); BOOST_LOG_SEV(Logger::Instance()._logger, S_WS::error) << logEvent;
 
-#define S_LOG_FATAL(logEvent)  BOOST_LOG_FUNCTION(); BOOST_LOG_SEV(Logger::Instance()._logger, boost::log::trivial::fatal) << logEvent;
+#define S_LOG_FATAL(logEvent)  BOOST_LOG_FUNCTION(); BOOST_LOG_SEV(Logger::Instance()._logger, S_WS::fatal) << logEvent;
 }
 #endif //UTILS_LOGGER_H

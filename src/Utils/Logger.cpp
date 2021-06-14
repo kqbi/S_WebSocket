@@ -32,7 +32,7 @@ namespace S_WS {
                                                                        boost::log::keywords::iteration = boost::log::expressions::reverse,
                                                                        boost::log::keywords::depth = 1)
                         << "]["
-                        << boost::log::expressions::attr<boost::log::trivial::severity_level>("Severity")
+                        << boost::log::expressions::attr<severity_level>("Severity")
                         << "] "
                         << boost::log::expressions::smessage;
 
@@ -115,7 +115,7 @@ namespace S_WS {
         boost::log::add_common_attributes();
         boost::log::core::get()->add_global_attribute("Scope", boost::log::attributes::named_scope());
         boost::log::core::get()->set_filter(
-                boost::log::trivial::severity >= level
+                boost::log::expressions::attr<severity_level>("Severity") >= level
         );
         return true;
     }
@@ -123,19 +123,20 @@ namespace S_WS {
     void Logger::InitSyslog(const std::string &syslog_server_ip, int syslog_server_port, int level) {
         boost::shared_ptr<boost::log::sinks::syslog_udp5424_backend> backend(new boost::log::sinks::syslog_udp5424_backend());
         backend->set_target_address(syslog_server_ip, syslog_server_port);
-        boost::log::sinks::syslog::custom_severity_mapping<boost::log::trivial::severity_level> mapping("Severity");
-        mapping[boost::log::trivial::debug] = boost::log::sinks::syslog::debug;
-        mapping[boost::log::trivial::info] = boost::log::sinks::syslog::info;
-        mapping[boost::log::trivial::warning] = boost::log::sinks::syslog::warning;
-        mapping[boost::log::trivial::error] = boost::log::sinks::syslog::error;
-        mapping[boost::log::trivial::fatal] = boost::log::sinks::syslog::critical;
+        boost::log::sinks::syslog::custom_severity_mapping<severity_level> mapping("Severity");
+        mapping[debug] = boost::log::sinks::syslog::debug;
+        mapping[info] = boost::log::sinks::syslog::info;
+        mapping[warning] = boost::log::sinks::syslog::warning;
+        mapping[error] = boost::log::sinks::syslog::error;
+        mapping[fatal] = boost::log::sinks::syslog::critical;
         backend->set_severity_mapper(mapping);
 
         _sysSink = boost::make_shared<sys_sink>(backend);
         boost::log::core::get()->add_sink(_sysSink);
 
-        _sysSink->set_filter(boost::log::expressions::attr<boost::log::trivial::severity_level>("Severity") >= level);
         _sysSink->set_formatter(_formatter);
-
+        boost::log::add_common_attributes();
+        boost::log::core::get()->add_global_attribute("Scope", boost::log::attributes::named_scope());
+        _sysSink->set_filter(boost::log::expressions::attr<severity_level>("Severity") >= level);
     }
 }
