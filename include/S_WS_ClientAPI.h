@@ -32,10 +32,9 @@ S_WS_CLIENT_EXPORT void S_WS_CLIENT_CALL S_WSClient_Release(ws_client ctx);
 typedef void (*CONNECTED)(void* pUser, bool connected);
 S_WS_CLIENT_EXPORT void S_WS_CLIENT_CALL S_WSClient_Connect(ws_client ctx, std::string uri, void* pUser, CONNECTED connected, std::map<std::string, std::string> extraHeaders = {});
 
-S_WS_CLIENT_EXPORT void S_WS_CLIENT_CALL S_WSClient_SendMsg(ws_client ctx, std::string msg);
+S_WS_CLIENT_EXPORT void S_WS_CLIENT_CALL S_WSClient_ReConnect(ws_client ctx);
 
-typedef void (*DISCONNECTNOTIFY)(void* pUser);
-S_WS_CLIENT_EXPORT void S_WS_CLIENT_CALL S_WSClient_DisConnectNotify(ws_client ctx, void* pUser, DISCONNECTNOTIFY disConnectNotify);
+S_WS_CLIENT_EXPORT void S_WS_CLIENT_CALL S_WSClient_SendMsg(ws_client ctx, std::string msg);
 
 typedef void (*READFROMSERVER)(void* pUser, S_WS_Msg* msg);
 S_WS_CLIENT_EXPORT void  S_WS_CLIENT_CALL S_WSClient_ReadFromServer(ws_client ctx, void* pUser, READFROMSERVER readFromServer);

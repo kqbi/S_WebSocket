@@ -19,7 +19,6 @@ namespace S_WS {
 
         typedef void (*CONNECTED)(void *pUser, bool connected);
 
-        typedef void (*DISCONNECTNOTIFY)(void *pUser);
         ////    Constructors and destructors    ////
 
         //## operation S_WS_Service(const std::string&,int,const std::string&,std::size_t)
@@ -29,9 +28,6 @@ namespace S_WS {
         ~S_WS_ClientService();
 
         ////    Operations    ////
-
-        //## operation disConnectNotify(void*,DISCONNECTNOTIFY)
-        void disConnectNotify(void *pUser, DISCONNECTNOTIFY disConnectNotify);
 
         //## operation execProcessIDWProtocol(std::string&)
         void execProcessIDWProtocol(std::string &connectionId);
@@ -48,6 +44,8 @@ namespace S_WS {
         //## operation listen()
         void
         connect(std::string &uri, void *pUser, CONNECTED connected, std::map<std::string, std::string> &extraHeaders);
+
+        void reConnect();
 
         //## operation readFromServer(void*,READFROMSERVER)
         void readFromServer(void *pUser, READFROMSERVER readFromServer);
@@ -74,13 +72,9 @@ namespace S_WS {
 
         CONNECTED _connected;
 
-        DISCONNECTNOTIFY _disConnectNotify;        //## attribute _disConnectNotify
+        void *_pUser;        //## attribute _pUserNotify
 
-        void *_pUserNotify;        //## attribute _pUserNotify
-
-        std::string _text;
-
-        S_WS_ClientConnect *_connect;
+        std::shared_ptr<S_WS_ClientConnect> _connect;
 
         std::string _target;
 

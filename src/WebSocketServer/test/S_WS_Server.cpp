@@ -10,7 +10,6 @@
 
 #include "S_WS_Server.h"
 #include "S_WS_Msg.h"
-#include "OXFWorkPoller.h"
 #include <iostream>
 //## package ServiceTest
 
@@ -25,9 +24,9 @@ void disConnectNotify(void *pUser, std::string &connectionId) {
     printf("%s disConnect!!!\n", connectionId.c_str());
 }
 
-S_WS_Server::S_WS_Server() : _wsServer(0) {
+S_WS_Server::S_WS_Server(boost::asio::io_context &ioc) : _wsServer(0) {
     //#[ operation S_WS_MainSession()
-    _wsServer = S_WSServer_Create(OXFWorkPollerPool::Instance()._ioc);
+    _wsServer = S_WSServer_Create(ioc);
     //#]
 }
 

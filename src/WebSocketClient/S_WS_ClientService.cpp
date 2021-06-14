@@ -4,50 +4,47 @@
 
 #include "S_WS_ClientService.h"
 #include "S_WS_ClientConnect.h"
-#include "Util.h"
+#include "Utils.h"
+#include <Logger.h>
 #include <iostream>
 namespace S_WS {
     S_WS_ClientService::S_WS_ClientService(boost::asio::io_context &ioc) : _ioc(ioc), _ipAddress(""), _port(""),
                                                                            _connect(0), _target(""), _readFromServer(0),
-                                                                           _connected(0), _disConnectNotify(0),
-                                                                           _pUserNotify(0),
-                                                                           _pUserRead(0) {
+                                                                           _connected(0), _pUser(0), _pUserRead(0) {
         _extraHeaders.clear();
-        _connect = new S_WS_ClientConnect(ioc, *this);
+        Logger::Instance().Init("client.log",0,0,50, 5);
+        _connect = std::make_shared<S_WS_ClientConnect>(ioc, *this);
     }
 
     S_WS_ClientService::~S_WS_ClientService() {
-        if (_connect) {
-            delete _connect;
-            _connect = 0;
-        }
+
     }
 
     void
     S_WS_ClientService::connect(std::string &uri, void *pUser, CONNECTED connected,
                                 std::map<std::string, std::string> &extraHeaders) {
-        _pUserNotify = pUser;
+        _pUser = pUser;
         _connected = connected;
-        std::string schema = FindField(uri.data(), nullptr, "://");
+        std::string schema = Utils::FindField(uri.data(), nullptr, "://");
         if (schema != "ws") {
-            _disConnectNotify(_pUserNotify);
+            S_LOG_DEBUG("schema != ws");
+            _connected(_pUser, false);
             return;
         }
-        std::string remote = FindField(uri.data(), "://", "/");
-        _ipAddress = FindField(remote.data(), nullptr, ":");
-        _port = FindField(remote.data(), ":", nullptr);
-        _target = FindField(uri.data() + schema.size() + strlen("://") + remote.size(), "/", nullptr);
+        std::string remote = Utils::FindField(uri.data(), "://", "/");
+        _ipAddress = Utils::FindField(remote.data(), nullptr, ":");
+        _port = Utils::FindField(remote.data(), ":", nullptr);
+        _target = Utils::FindField(uri.data() + schema.size() + strlen("://") + remote.size(), "/", nullptr);
         _extraHeaders.swap(extraHeaders);
+        _connect->connect(_ipAddress, _port);
+    }
+
+    void S_WS_ClientService::reConnect() {
         _connect->connect(_ipAddress, _port);
     }
 
     void S_WS_ClientService::handleStop() {
         _connect->closeSocket();
-    }
-
-    void S_WS_ClientService::disConnectNotify(void *pUser, DISCONNECTNOTIFY disConnectNotify) {
-        _pUserNotify = pUser;
-        _disConnectNotify = disConnectNotify;
     }
 
     void S_WS_ClientService::readFromServer(void *pUser, READFROMSERVER readFromServer) {

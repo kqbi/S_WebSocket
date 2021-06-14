@@ -37,26 +37,14 @@ namespace S_WS {
 
         ////    Operations    ////
 
-        //## operation asyncWrite(boost::shared_ptr<std::string const> const&)
-        void asyncWrite(std::string &msg);
-
         //## operation closeSocket()
         void closeSocket();
 
         //## operation doRead()
         void doRead();
 
-        //## operation fail(boost::beast::error_code,char const*)
-        void fail(boost::beast::error_code ec, char const *what);
-
         //## operation getConnectionId()
         std::string getConnectionId();
-
-        //## operation handleAccept(boost::beast::error_code)
-        void handleAccept(boost::beast::error_code ec);
-
-        //## operation handleWrite(boost::beast::error_code,std::size_t)
-        void handleWrite(boost::beast::error_code ec, std::size_t bytesTransferred);
 
         //## operation run()
         void run();
@@ -64,25 +52,13 @@ namespace S_WS {
         //## operation send(boost::shared_ptr<std::string const> const&)
         void send(std::string &ss);
 
-        //## operation sendReqMsg(std::string)
-        void sendReqMsg(std::string msg);
-
-        //## operation sendResMsg(std::string,int)
-        void sendResMsg(std::string msg, int httpErrorCode = 200);
-
-        //## operation shutdown()
-        void shutdown();
-
         //## operation start()
         void start();
 
         //## operation stop()
-        void stop();
+        void stop(boost::system::error_code ec, std::string f);
 
     private :
-
-        //## operation handleRead(boost::beast::error_code,std::size_t)
-        void handleRead(boost::beast::error_code ec, std::size_t bytesTransferred);
 
         ////    Attributes    ////
 
@@ -96,8 +72,6 @@ namespace S_WS {
 
         boost::optional<boost::beast::http::request_parser<boost::beast::http::string_body> > _parser;        //## attribute _parser
 
-        std::queue<std::string> _queue;        //## attribute _queue
-
         std::string _remoteIpAddress;        //## attribute _remoteIpAddress
 
         unsigned short _remotePort;        //## attribute _remotePort
@@ -106,7 +80,7 @@ namespace S_WS {
 
         boost::beast::websocket::stream<boost::beast::tcp_stream> _ws;        //## attribute _ws
 
-        boost::asio::io_context::strand _strand;
+        boost::asio::strand<boost::asio::io_context::executor_type> _strand;
     };
 }
 #endif

@@ -11,7 +11,6 @@
 #ifndef ServiceTest_S_WS_MainSession_H
 #define ServiceTest_S_WS_MainSession_H
 
-#include <oxf.h>
 #include "S_WS_ServerAPI.h"
 class S_WS_Msg;
 
@@ -26,7 +25,7 @@ class S_WS_Server {
 public :
 
     //## operation S_WS_MainSession()
-    S_WS_Server();
+    S_WS_Server(boost::asio::io_context &ioc);
     
     //## operation ~S_WS_MainSession()
     ~S_WS_Server();

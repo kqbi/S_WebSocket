@@ -15,9 +15,8 @@ if (CMAKE_SYSTEM_NAME MATCHES "Linux")
 elseif (CMAKE_SYSTEM_NAME MATCHES "Windows")
     set(system win)
     set(THIRDPARTY "D:/work/projects/3rdparty")
-    set(BOOST_DATE_TIME_LIB libboost_date_time-vc141-mt-x64-1_72.lib)
-    set(BOOST_THREAD_LIB libboost_thread-vc141-mt-x64-1_72.lib)
-    set(OXF_LIB oxf-md.lib)
+    set(BOOST_DATE_TIME_LIB libboost_date_time-vc141-mt-x64-1_75.lib)
+    set(BOOST_THREAD_LIB libboost_thread-vc141-mt-x64-1_75.lib)
 endif ()
 
 #加载自定义模块
@@ -35,14 +34,6 @@ set(INSTALL_PATH_INCLUDE ${THIRDPARTY}/${CMAKE_PROJECT_NAME}/include)
 #安装头文件至系统目录
 install(DIRECTORY src DESTINATION ${INSTALL_PATH_INCLUDE} FILES_MATCHING PATTERN "*.h")
 
-#oxf
-set(OXF_ROOT_PATH ${THIRDPARTY}/oxf)
-set(OXF_INCLUDE_PATH ${OXF_ROOT_PATH}/include)
-set(OXF_LIB_PATH ${OXF_ROOT_PATH}/lib/${system}/${platform}/${CMAKE_BUILD_TYPE})
-INCLUDE_DIRECTORIES(${OXF_INCLUDE_PATH})
-link_directories(${OXF_LIB_PATH})
-list(APPEND LINK_LIB_LIST ${OXF_LIB})
-
 #boost
 #set(BOOST_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/boost)
 set(BOOST_ROOT_PATH ${THIRDPARTY}/boost)
@@ -53,7 +44,7 @@ link_directories(${BOOST_LIB_PATH})
 list(APPEND LINK_LIB_LIST ${BOOST_DATE_TIME_LIB} ${BOOST_THREAD_LIB})
 
 if (WIN32)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /bigobj")
 set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} /MDd /Od /ZI /DEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} /MD /O2")
 else (WIN32)

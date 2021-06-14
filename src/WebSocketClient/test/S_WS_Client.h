@@ -11,7 +11,6 @@
 #ifndef ServiceTest_S_WS_MainSession_H
 #define ServiceTest_S_WS_MainSession_H
 
-#include <oxf.h>
 #include "S_WS_ClientAPI.h"
 class S_WS_Msg;
 
@@ -26,7 +25,7 @@ class S_WS_Client {
 public :
 
     //## operation S_WS_MainSession()
-    S_WS_Client();
+    S_WS_Client(boost::asio::io_context &ioc);
     
     //## operation ~S_WS_MainSession()
     ~S_WS_Client();
@@ -37,7 +36,8 @@ public :
 
     //## operation listen(unsigned short)
     void connect(std::string uri, void* pUser, CONNECTED connected, std::map<std::string, std::string> extraHeaders = {});
-    
+
+    void reConnect();
     ////    Attributes    ////
     
     ws_client _wsClient;

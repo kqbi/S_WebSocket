@@ -17,13 +17,10 @@ S_WS_CLIENT_EXPORT void S_WS_CLIENT_CALL S_WSClient_Connect(ws_client ctx, std::
     ((S_WS_ClientService *) ctx)->connect(uri, pUser, connected, extraHeaders);
 }
 
-S_WS_CLIENT_EXPORT void S_WS_CLIENT_CALL
-S_WSClient_DisConnectNotify(ws_client ctx, void *pUser, DISCONNECTNOTIFY disConnectNotify) {
+S_WS_CLIENT_EXPORT void S_WS_CLIENT_CALL S_WSClient_ReConnect(ws_client ctx) {
     assert(ctx);
-    if (disConnectNotify)
-        ((S_WS_ClientService *) ctx)->disConnectNotify(pUser, disConnectNotify);
+    ((S_WS_ClientService *) ctx)->reConnect();
 }
-
 
 S_WS_CLIENT_EXPORT void S_WS_CLIENT_CALL S_WSClient_SendMsg(ws_client ctx, std::string msg) {
     assert(ctx);

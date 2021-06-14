@@ -11,7 +11,8 @@
 #include "S_WS_ServerService.h"
 #include "S_WS_Connection.h"
 #include "S_WS_Msg.h"
-#include "Util.h"
+#include "Logger.h"
+#include "Utils.h"
 //## package WebSocketService
 namespace S_WS {
 //## class S_WS_Service
@@ -20,6 +21,7 @@ namespace S_WS {
                                                                            _port(0), _pUserRead(0), _readFromServer(0),
                                                                            _disConnectNotify(0), _pUserNotify(0) {
         //#[ operation S_WS_Service(const std::string&,int,const std::string&,std::size_t)
+        Logger::Instance().Init("server.log",0,0,50, 5);
         //#]
     }
 
@@ -798,11 +800,11 @@ namespace S_WS {
     void S_WS_ServerService::handleAccept(boost::beast::error_code ec, boost::asio::ip::tcp::socket s) {
         //#[ operation handleAccept(boost::beast::error_code,tcp::socket)
         if (!_acceptor.is_open()) {
-            //S_LOG_ERROR("accept is falied.");
+            S_LOG_ERROR("accept is falied.");
             return;
         }
         if (!ec) {
-            std::string connectId = getNewConnectionId();
+            std::string connectId = Utils::getNewConnectionId();
             //S_LOG_DEBUG("start.");
             boost::system::error_code ec;
 
@@ -841,6 +843,7 @@ namespace S_WS {
 
     bool S_WS_ServerService::listen(std::string &ipAddress, unsigned short port) {
         //#[ operation listen()
+        S_LOG_INFO("listen " << port);
         _ipAddress = ipAddress;
         _port = port;
         boost::asio::ip::tcp::endpoint endpoint;
@@ -858,10 +861,11 @@ namespace S_WS {
             _acceptor.bind(endpoint);
             _acceptor.listen();
         } catch (std::exception &e) {
-            //S_LOG_ERROR("listen Error: " << e.what() << ".");
+            S_LOG_ERROR("listen Error: " << e.what() << ".");
             return false;
         }
         startAccept();
+        S_LOG_INFO("startAccept");
         return true;
         //#]
     }
