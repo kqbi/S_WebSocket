@@ -37,7 +37,7 @@ namespace S_WS {
         //#]
     }
 
-    void S_WS_ServerService::disConnectNotify(void *pUser, DISCONNECTNOTIFY disConnectNotify) {
+    void S_WS_ServerService::disConnectNotify(DISCONNECTNOTIFY disConnectNotify, void *pUser) {
         //#[ operation disConnectNotify(void*,DISCONNECTNOTIFY)
         _pUserNotify = pUser;
         _disConnectNotify = disConnectNotify;
@@ -870,7 +870,7 @@ namespace S_WS {
         //#]
     }
 
-    void S_WS_ServerService::readFromServer(void *pUser, READFROMSERVER readFromServer) {
+    void S_WS_ServerService::readFromServer(READFROMSERVER readFromServer, void *pUser) {
         //#[ operation readFromServer(void*,READFROMSERVER)
         _pUserRead = pUser;
         _readFromServer = readFromServer;

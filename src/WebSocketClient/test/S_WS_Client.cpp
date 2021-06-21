@@ -13,13 +13,15 @@
 #include <iostream>
 //## package ServiceTest
 
-void readFromServer(void *pUser, S_WS::S_WS_Msg *msg) {
-    S_WS_Client* server = (S_WS_Client*)pUser;
-    std::cout<<msg->_msg << std::endl;
+void readFromServer(S_WS::S_WS_Msg *msg, void *pUser) {
+    S_WS_Client *server = (S_WS_Client *) pUser;
+    std::cout << msg->_msg << std::endl;
 }
 
 S_WS_Client::S_WS_Client(boost::asio::io_context &ioc) : _wsClient(0) {
     //#[ operation S_WS_MainSession()
+    std::string fileName = "wsClient.log";
+    S_WSClient_InitLog(fileName, 0, 1, 50, 5);
     _wsClient = S_WSClient_Create(ioc);
     //#]
 }
@@ -31,12 +33,13 @@ S_WS_Client::~S_WS_Client() {
 }
 
 void S_WS_Client::init() {
-    S_WSClient_ReadFromServer(_wsClient,this, readFromServer);
+    S_WSClient_ReadFromServer(_wsClient, readFromServer, this);
 }
 
-void S_WS_Client::connect(std::string uri, void* pUser, CONNECTED connected, std::map<std::string, std::string> extraHeaders) {
+void S_WS_Client::connect(std::string uri, CONNECTED connected, void *pUser,
+                          std::map<std::string, std::string> extraHeaders) {
     //#[ operation listen(unsigned short)
-    S_WSClient_Connect(_wsClient, uri, pUser, connected,extraHeaders);
+    S_WSClient_Connect(_wsClient, uri, connected, pUser, extraHeaders);
     //#]
 }
 

@@ -15,7 +15,7 @@
 
 static bool finished = false;
 
-void connectNotify(void *pUser, bool connected) {
+void connectNotify(bool connected, void *pUser) {
     S_WS_Client *client = (S_WS_Client *) pUser;
     if (!connected) {
 		printf("disconnected\n");
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
     client->init();
     std::string uri = "ws://127.0.0.1:6971/";
     std::map<std::string, std::string> t;
-    client->connect(uri, client, connectNotify, t);
+    client->connect(uri, connectNotify, client, t);
     std::thread a([&](){ioc.run();});
     while (!finished) {
 #ifdef WIN32

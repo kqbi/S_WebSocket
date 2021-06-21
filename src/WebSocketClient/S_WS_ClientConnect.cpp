@@ -83,7 +83,7 @@ namespace S_WS {
                                    stop(ec, "Handshake");
                                    return;
                                 }
-                                _service->_connected(_service->_pUser, true);
+                                _service->_connected(true, _service->_pUser);
 
                                 asyncRead();
                             });
@@ -99,7 +99,7 @@ namespace S_WS {
                     if (_service->_pUserRead && _service->_readFromServer) {
                         S_WS_Msg *msg = new S_WS_Msg(std::string(""),
                                                      std::string(boost::beast::buffers_to_string(_buffer.data())));
-                        _service->_readFromServer(_service->_pUserRead, msg);
+                        _service->_readFromServer(msg, _service->_pUserRead);
                     }
                     _buffer.consume(_buffer.size());
                 }

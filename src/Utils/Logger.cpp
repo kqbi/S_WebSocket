@@ -37,24 +37,7 @@ namespace S_WS {
                         << boost::log::expressions::smessage;
 
         switch (type) {
-            case file: {
-
-//            boost::shared_ptr<boost::log::sinks::text_multifile_backend> backend =
-//                    boost::make_shared<boost::log::sinks::text_multifile_backend>();
-//
-//            // Set up the file naming pattern
-//            backend->set_file_name_composer(boost::log::sinks::file::as_file_name_composer(
-//                    boost::log::expressions::stream << strLogPath << "/"
-//                                    << boost::log::expressions::attr<logging::trivial::severity_level>("Severity")
-//                                    << "/" << strLogName << "."
-//                                    // 文件名还是带上Level，否者copy到一起的时候分不清
-//                                    << boost::log::expressions::attr<logging::trivial::severity_level>("Severity") << "."
-//                                    << boost::log::expressions::attr<std::string>("RotationDate") << ".log"));
-
-
-
-
-
+            case console: {
                 _fileSink = boost::make_shared<file_sink>(
                         boost::log::keywords::file_name =
                                 Utils::ExeDir() + fileName,                       // file name pattern
@@ -81,10 +64,7 @@ namespace S_WS {
                 boost::log::core::get()->add_sink(_fileSink);
                 break;
             }
-            case console: {
-//            auto consoleSink = boost::log::add_console_log();
-//            consoleSink->set_formatter(formatter);
-//            boost::log::core::get()->add_sink(consoleSink);S
+            case file: {
                 boost::shared_ptr<boost::log::sinks::text_ostream_backend> backend = boost::make_shared<boost::log::sinks::text_ostream_backend>();
                 _consoleSink = boost::make_shared<console_sink>(backend);
 
@@ -95,12 +75,30 @@ namespace S_WS {
             }
                 break;
             default: {
-//            auto consoleSink = boost::log::add_console_log();
-//            consoleSink->set_formatter(formatter);
-//            boost::log::core::get()->add_sink(consoleSink);
+                _fileSink = boost::make_shared<file_sink>(
+                        boost::log::keywords::file_name =
+                                Utils::ExeDir() + fileName,                       // file name pattern
+                        boost::log::keywords::target_file_name = "%Y%m%d_%H%M%S_%N.log",   // file name pattern
+                        boost::log::keywords::time_based_rotation = boost::log::sinks::file::rotation_at_time_point(0,
+                                                                                                                    0,
+                                                                                                                    0),
+                        boost::log::keywords::rotation_size =
+                                maxFileSize * 1024 * 1024,                         // rotation size, in characters
+                        boost::log::keywords::open_mode = std::ios::out | std::ios::app
+                );
 
+                _fileSink->locked_backend()->set_file_collector(boost::log::sinks::file::make_collector(
+                        boost::log::keywords::target = Utils::ExeDir() + "logs",        //folder name.
+                        boost::log::keywords::max_size = maxFileSize * maxBackupIndex * 1024 *
+                                                         1024,    //The maximum amount of space of the folder.
+                        boost::log::keywords::min_free_space = 10 * 1024 * 1024,  //Reserved disk space minimum.
+                        boost::log::keywords::max_files = 512
+                ));
 
-
+                _fileSink->set_formatter(_formatter);
+                _fileSink->locked_backend()->scan_for_files();
+                _fileSink->locked_backend()->auto_flush(true);
+                boost::log::core::get()->add_sink(_fileSink);
 
                 boost::shared_ptr<boost::log::sinks::text_ostream_backend> backend = boost::make_shared<boost::log::sinks::text_ostream_backend>();
                 _consoleSink = boost::make_shared<console_sink>(backend);

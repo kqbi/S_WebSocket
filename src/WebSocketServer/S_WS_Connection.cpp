@@ -62,7 +62,7 @@ namespace S_WS {
                                 msg->_remoteIp = _remoteIpAddress;
                                 msg->_remotePort = _remotePort;
                                 S_LOG_DEBUG("read:" << msg->_msg)
-                                _service->_readFromServer(_service->_pUserRead, msg);
+                                _service->_readFromServer(msg, _service->_pUserRead);
                             }
                             _buffer.consume(_buffer.size());
                         }
@@ -139,7 +139,7 @@ namespace S_WS {
         S_LOG_DEBUG(f << "error: " << ec.message());
         if (ec != boost::asio::error::operation_aborted) {
             if (_service->_pUserNotify && _service->_disConnectNotify)
-                _service->_disConnectNotify(_service->_pUserNotify, _connectionId);
+                _service->_disConnectNotify(_connectionId, _service->_pUserNotify);
             _connectionManager.stop(shared_from_this());
         } else {
             if (_ws.is_open()) {

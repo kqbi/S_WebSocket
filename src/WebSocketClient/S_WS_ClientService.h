@@ -15,9 +15,9 @@ namespace S_WS {
 
     class S_WS_ClientService : public std::enable_shared_from_this<S_WS_ClientService> {
     public :
-        typedef void (*READFROMSERVER)(void *pUser, S_WS_Msg *msg);
+        typedef void (*READFROMSERVER)(S_WS_Msg *msg, void *pUser);
 
-        typedef void (*CONNECTED)(void *pUser, bool connected);
+        typedef void (*CONNECTED)(bool connected, void *pUser);
 
         typedef std::shared_ptr<S_WS_ClientService> Ptr;
 
@@ -45,12 +45,12 @@ namespace S_WS {
 
         //## operation listen()
         void
-        connect(std::string &uri, void *pUser, CONNECTED connected, std::map<std::string, std::string> &extraHeaders);
+        connect(std::string &uri, CONNECTED connected, std::map<std::string, std::string> &extraHeaders, void *pUser);
 
         void reConnect();
 
         //## operation readFromServer(void*,READFROMSERVER)
-        void readFromServer(void *pUser, READFROMSERVER readFromServer);
+        void readFromServer(READFROMSERVER readFromServer, void *pUser);
 
         //## operation sendMessage(std::string)
         void sendMessage(std::string &msg);

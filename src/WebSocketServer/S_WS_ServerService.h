@@ -30,9 +30,9 @@ namespace S_WS {
     public :
         typedef std::shared_ptr<S_WS_Connection> connection_ptr;
 
-        typedef void (*READFROMSERVER)(void *pUser, S_WS_Msg *msg);
+        typedef void (*READFROMSERVER)(S_WS_Msg *msg, void *pUser);
 
-        typedef void (*DISCONNECTNOTIFY)(void *pUser, std::string &connectionId);
+        typedef void (*DISCONNECTNOTIFY)(std::string &connectionId, void *pUser);
 
         typedef std::shared_ptr<S_WS_ServerService> Ptr;
         ////    Constructors and destructors    ////
@@ -49,7 +49,7 @@ namespace S_WS {
         void closeConnection(std::string &connectionId);
 
         //## operation disConnectNotify(void*,DISCONNECTNOTIFY)
-        void disConnectNotify(void *pUser, DISCONNECTNOTIFY disConnectNotify);
+        void disConnectNotify(DISCONNECTNOTIFY disConnectNotify, void *pUser);
 
         //## operation execProcessIDWProtocol(std::string&)
         void execProcessIDWProtocol(std::string &connectionId);
@@ -64,7 +64,7 @@ namespace S_WS {
         bool listen(std::string &ipAddress, unsigned short port);
 
         //## operation readFromServer(void*,READFROMSERVER)
-        void readFromServer(void *pUser, READFROMSERVER readFromServer);
+        void readFromServer(READFROMSERVER readFromServer, void *pUser);
 
         //## operation sendMessage(std::string)
         void sendMessage(std::string &msg);

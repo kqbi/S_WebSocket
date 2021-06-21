@@ -35,7 +35,7 @@ public :
     void init();
 
     //## operation listen(unsigned short)
-    void connect(std::string uri, void* pUser, CONNECTED connected, std::map<std::string, std::string> extraHeaders = {});
+    void connect(std::string uri, CONNECTED connected, void* pUser, std::map<std::string, std::string> extraHeaders = {});
 
     void reConnect();
     ////    Attributes    ////

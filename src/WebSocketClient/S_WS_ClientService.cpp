@@ -7,12 +7,12 @@
 #include "Utils.h"
 #include <Logger.h>
 #include <iostream>
+
 namespace S_WS {
     S_WS_ClientService::S_WS_ClientService(boost::asio::io_context &ioc) : _ioc(ioc), _ipAddress(""), _port(""),
                                                                            _connect(0), _target(""), _readFromServer(0),
                                                                            _connected(0), _pUser(0), _pUserRead(0) {
         _extraHeaders.clear();
-        Logger::Instance().Init("client.log",0,0,50, 5);
     }
 
     S_WS_ClientService::~S_WS_ClientService() {
@@ -20,8 +20,8 @@ namespace S_WS {
     }
 
     void
-    S_WS_ClientService::connect(std::string &uri, void *pUser, CONNECTED connected,
-                                std::map<std::string, std::string> &extraHeaders) {
+    S_WS_ClientService::connect(std::string &uri, CONNECTED connected,
+                                std::map<std::string, std::string> &extraHeaders, void *pUser) {
         _pUser = pUser;
         _connected = connected;
         _connect = std::make_shared<S_WS_ClientConnect>(_ioc, shared_from_this());
@@ -47,7 +47,7 @@ namespace S_WS {
         _connect->closeSocket();
     }
 
-    void S_WS_ClientService::readFromServer(void *pUser, READFROMSERVER readFromServer) {
+    void S_WS_ClientService::readFromServer(READFROMSERVER readFromServer, void *pUser) {
         _pUserRead = pUser;
         _readFromServer = readFromServer;
     }

@@ -15,12 +15,12 @@
 
 //## class S_WS_MainSession
 
-void readFromServer(void *pUser, S_WS::S_WS_Msg *msg) {
+void readFromServer(S_WS::S_WS_Msg *msg, void *pUser) {
     S_WS_Server* server = (S_WS_Server*)pUser;
     std::cout<<msg->_msg << std::endl;
 }
 
-void disConnectNotify(void *pUser, std::string &connectionId) {
+void disConnectNotify(std::string &connectionId, void *pUser) {
     printf("%s disConnect!!!\n", connectionId.c_str());
 }
 
@@ -40,8 +40,8 @@ bool S_WS_Server::listen(std::string ip, unsigned short port) {
     //#[ operation listen(unsigned short)
     bool ret = false;
     if (ret = S_WSServer_Listen(_wsServer, ip, port)) {
-        S_WSServer_ReadFromServer(_wsServer, this, readFromServer);
-        S_WSServer_DisConnectNotify(_wsServer, this, disConnectNotify);
+        S_WSServer_ReadFromServer(_wsServer, readFromServer, this);
+        S_WSServer_DisConnectNotify(_wsServer, disConnectNotify, this);
     }
     return ret;
     //#]
